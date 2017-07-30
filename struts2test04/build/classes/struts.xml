@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+
+	<package name="default" namespace="/" extends="struts-default">
+	<!--  配置使用paramsPrepareParamsStack作为默认的拦截器栈-->
+	<!-- 修改PrepareInterceptor拦截器的alwaysinvokePrepare的属性值为false -->
+		<interceptors>
+	        <interceptor-stack name="parentStacktest">
+	        <interceptor-ref name="paramsPrepareParamsStack">
+	            <param name="prepare.alwaysinvokePrepare">false</param>
+	        </interceptor-ref>
+	        </interceptor-stack>
+	    </interceptors>
+        <default-interceptor-ref name="parentStacktest"/>
+	
+	
+	  <action name="emp-*" class="com.struts2test04.EmployeeAction" method="{1}">
+	   
+	     <result name="{1}">/emp-{1}.jsp</result>
+	    
+	     <result name="delete" type="redirectAction">emp-list</result>
+	     
+	     <result name="save" type="redirectAction">emp-list</result>
+	      
+	     <result name="update" type="redirectAction">emp-list</result>
+	    
+	  </action>
+	  
+	</package>
+</struts>
