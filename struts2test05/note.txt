@@ -1,0 +1,7 @@
+类型转换错误：
+ 如果类型转换失败:
+  1.若Action类没有实现ValidationAware接口，Struts在遇到类型转换错误时仍然会调用其Action方法，就好像
+  什么都没有发生一样。
+  2.若Action；类实现ValidationAware接口：struts在遇到类型转换错误时仍将不会继续调用其Action方法；struts
+   将检查相关action元素生命和是否包含一个name=input的result，如果由于，Struts将把控制权转交给哪个result元素
+ ，若没有input结果，Struts将抛出一个异常。 
