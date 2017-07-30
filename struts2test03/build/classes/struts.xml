@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+<!-- 打开静态方法调用的限制 -->
+<constant name="struts.ognl.allowStaticMethodAccess" value="true"></constant>
+	<package name="default" namespace="/" extends="struts-default">
+	
+	  
+	
+	<!-- 全局的exception: -->
+	
+	
+	<global-results>
+  	    <result name="input">/input.jsp</result>
+	</global-results>
+	
+	<global-exception-mappings>
+        <exception-mapping result="input" exception="java.lang.ArithmeticException"></exception-mapping>
+	</global-exception-mappings>
+
+	<action name="product-save" class="com.struts2test03.Product" method="save">
+	   <result>/details.jsp</result>  
+	</action>
+	 
+	 <action name="testTag" class="com.struts2test03.Product"  method="testTag"  >
+	  <result>/common-tag.jsp</result>
+	 </action>
+	 
+	 <action name="save" class="com.struts2test03.UserAction" method="save">
+	  <result name="input">/form-tag.jsp</result>
+	 </action>
+	 <!-- 使用下面action需将上面的注释掉 -->
+	 <action name="emp-*" class="com.struts2test04.Employee" method="{1}"> 
+       <result name="{1}">/emp-{1}.jsp</result>
+      </action> 
+	
+     
+	</package>
+</struts>

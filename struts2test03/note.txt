@@ -1,0 +1,37 @@
+1.关于值栈
+ (1).helloWord 时 ，${productName}读取productName值，实际上该属性并不不在request等域对象中，而是从值栈中获取 的。
+  
+ (2).值栈(valueStack):
+    I:可以从ActionContext中获取值栈对象
+            值栈分为两个逻辑部分：
+       a.Map栈：实际上是OgnlContext类型，是个Map，也是对ActionContext的一个引用，里边保存着各种Map：
+         requestMap,sessionMap,applicationMap,parameterMap
+       b.对象栈，实际上是一个CompoundRoot类型，是一个使用ArrayList定义的栈。存放的是对象，里边保存各种和当前Action实例相关的对象，是一个数据结构意义上的栈
+2.Struts2利用s:property标签和OGNL表达式来读取值栈中的属性值。
+  (1).值栈中的属性值：
+       a.对于对象栈:对象栈中某一个对象属性值
+       b.Map栈:request,session,application的一个属性值或一个请求参数的值
+  (2).读取对象栈中对象的属性
+      a.若想访问Object Stack里的某个对象的属性，可以使用以下几种形式之一：
+      
+       object.propertyName; 
+       object['propertyName'];
+       object["propertyName"];
+       
+      b.ObjectStack里对象可以通过一个从零开始的下表来引用，ObjectStack里的栈顶对象可以使用[0]来引用。
+       它下面的那个对象可以用[1]来引用。
+       [0].message
+       
+      c.[n]的含义是从第n个开始搜索，而不是只搜索第n个对象
+      
+      d.若从栈顶对象开始搜索，则可以省略下标部分：message
+      
+      e.结合s:peoperty标签：<s:property value="[0].message"/>，  <s:property value="[0].message"/>
+   (3).默认情况下，Action对象会被Struts2自动的放到值栈的站顶
+ 3.Struts2自动把Action对象放到值栈中
+  (1).放入的时间点为：Struts2终将调用Action类的action方法，在调用该方法之前:
+      a.先创建一个StrutsActionProxy对象
+      b.在创建StrutsActionProxy之后，对其进行初始化时，把Action对象放入到值栈中。
+      
+  (2).
+  (3).
