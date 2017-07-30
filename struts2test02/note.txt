@@ -1,0 +1,47 @@
+一.步骤：
+  1.搭建struts2的开发环境
+  2.action VS Action类
+  
+  （1）.action代表一个struts2的请求
+  （2）.Action类：能够处理struts2请求的类
+      特点：1.属性的名字必须遵守与javaBean属性名相同的命名规则。
+                       属性的类型可以是任意类型，从字符串发哦非字符串（基本类型）之间的数据可以自动发生
+      
+      2.必须有一个不带参的构造器；通过反射创建实例
+      3.至少有一个供struts在执行这个action时调用的方法
+      4.同一个Action类可以包含多个action方法
+      5.Struts2会为每一个HTTP请求创建一个新的Action，即Action不是单例的，是线程安全的
+ 二.在Action中访问Web资源
+   1.Web资源
+      HttpServletRequest,HttpSession,ServletContext等原生 的servlet API
+      
+   2.访问方法
+        1.和servlet API 解耦的方式
+                              使用ServletActionContext
+                              实现XXXAware接口
+                       选择：若一个Action中有多个action方法，且多个方法都需要使用Map或Parameters，则常用Aware接口的方式
+                       session对应的Map实际上是sessionMap类型的，强转后若其调用的invalidate（）方法，则可以使其Session失效
+        2.和servlet API 耦合的方式
+                             使用ServletActionContext
+                              实现ServletXXXAware接口
+ 三.Struts请求扩展民问题
+   1.org.apache.struts2包下的default.properties中配置了Struts2应用的一些常量
+   2.struts.action.extension定义当前Struts2应用可以接受的请求扩展名
+   3.可以在struts.xml文件中以常量配置的方式修改default.properties所配置的常量
+   <constant name="struts.action.extension" value="action,do,">
+   四.ActionSupport
+    (1).ActionSupport是默认的Action类：若某个action节点设有配置class属性，则ActionSupport执行的Action类，而executew方法即为默认执行action方法
+    (2).在手工完成  字段验证，显示错误消息，国际化等情况下，推介继承ActionSupport
+   五.result
+   (1).result是action的节点的子节点
+   (2).result代表action方法执行后，可能去的目的地
+   (3).一个action节点可以配置多个result子节点
+   (4).result的name属性值对应着action方法可能有的一个返回值
+   (5).result的type属性在struts-default包的result-types节点的name属性中低昂一，表示相应结果的类型 
+      type的取值常用的有：
+          dispatcher(默认的):转发
+          redirect:重定向
+          redirectAction:重定向到一个action
+          chain:转发到一个Action
+      
+   
